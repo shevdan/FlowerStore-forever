@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public class Order {
     private List<Item> items = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
     private Payment payment;
     private Delivery delivery;
 
@@ -46,5 +47,27 @@ public class Order {
         System.out.println(payment.pay(price));
         System.out.println(delivery.delivery(items));
 
+    }
+
+    public void addUser(User newUser){
+        users.add(newUser);
+    }
+
+    public void removeUser(User delUser){
+        for (int i = 0; i < users.size(); i++){
+            if (Objects.equals(users.get(i), delUser))
+                items.remove(i);
+        }
+    }
+
+    public void notifyUsers(){
+        for (int i = 0; i < users.size(); i++){
+            users.get(i).update("ready");
+        }
+    }
+
+    public void order(){
+        processOrder();
+        notifyUsers();
     }
 }
